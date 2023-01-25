@@ -5,6 +5,7 @@
 本项目主要使用到的微服务组件有：
 
 + Eureka：用作注册中心
++ RestTemplate：对服务进行调用
 
 ## Modules 介绍
 
@@ -12,6 +13,7 @@
 | :---: | :--- |
 | eurekaserver | Eureka Server 服务，对外提供了注册中心的功能 |
 | eurekaclient | 一个 Eureka Client，是一个服务提供方，对外提供了 Student 实体的增删查改功能 |
+| resttemplate | 它使用 RestTemplate 来调用 eurekaclient 所提供的服务 |
 
 ## 项目启动顺序
 
