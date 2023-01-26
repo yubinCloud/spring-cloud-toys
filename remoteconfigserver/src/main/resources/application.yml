@@ -1,0 +1,18 @@
+server:
+  port: 8888
+spring:
+  application:
+    name: remoteconfigserver
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://gitee.com/yubinCloud/spring-cloud-toys.git  # 指定存储配置数据的 git 仓库
+          search-paths: config
+          username: yubinCloud
+          password: xxxx
+      label: master
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/

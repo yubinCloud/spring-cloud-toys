@@ -22,12 +22,20 @@
 | consumer | 服务消费者，内部调用了 `eurekaclient` 所提供的服务 |
 | zuul | 使用 Zuul 的 Gateway，可以作为 proxy 并统一访问入口 |
 
-## 项目启动顺序
+## 模块完成顺序
+
+这个顺序也就是学习的顺序。
 
 1. eurekaserver
 2. eurekaclient
 3. consumer
 4. zuul
+5. ribbon
+6. feignexample
+7. hystrix
+8. nativeconfigserver
+9. nativeconfigclient
+10. remoteconfigserver
 
 ## 组件介绍
 
@@ -228,3 +236,11 @@ nativeconfigclient 可以读取 server 服务所提供的配置数据。它的 p
 具体可参考 nativeconfigclient 模块。
 
 之后，从配置中心读取的配置文件数据就可以像仿佛这个文件是在本项目中一样了。
+
+#### 存储到远程 Git 仓库
+
+由于本项目已经被 Git 管理，因此可以在项目根目录出建立一个目录 `config`，里面存在配置文件。
+
+然后创建一个 config server 模块：`remoteconfigserver`，其余过程与 nativeconfigserver 类似，
+只不过需要在 application.yml 中配置一下远程 git 仓库的相关信息。
+
