@@ -10,6 +10,7 @@
 + Ribbon: 负载均衡解决方案，是一个使用 HTTP 请求进行控制的负载均衡客户端
 + Feign: 声明式接口调用，可以以简单的方式来调用 HTTP API，可以替代 Ribbon + RestTemplate
 + Hystrix: 容错机制
++ Spring Cloud Config: 配置中心
 
 ## Modules 介绍
 
@@ -190,3 +191,40 @@ Hystrix 数据监控需要结合 Spring Boot Actuator 来使用，Actuator 提�
 
 + 访问 `/actuator/hystrix.stream` 可以监控到请求数据
 + 访问 `/hystrix` 可以看到可视化的监控界面，输入要监控的地址节点，即可看到该节点的可视化数据监控
+
+### Spring Cloud Config
+
+Spring Cloud Config 通过服务端可以为多个客户端提供配置服务，
+可以选择将配置文件存储在本地，
+也可以将配置文件存储在远程 Git 仓库，创建 Config Server，通过它来管理所有的配置文件。
+
+#### 存储在本地
+
+nativeconfigserver 模块提供了对存储与本地的配置数据的 server 服务，可以以它为例。
+
+添加依赖：
+
+```xml
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-config-server</artifactId>
+</dependency>
+```
+
+然后在 application.yml 中需要指定 native 的 profiles，并指定配置中心的数据路径。
+
+在 Spring Boot Application 中要加一个 `@EnableConfigServer` 的注解。这样这个 application 就可以为其他服务返回配置文件了。
+
+nativeconfigclient 可以读取 server 服务所提供的配置数据。它的 pom 依赖是：
+
+```xml
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-config</artifactId>
+</dependency>
+```
+
+为了读取配置中心的配置文件，需要先在项目中创建一个配置文件：`bootstrap.yml`，然后在里面告诉程序从哪里读取配置文件。
+具体可参考 nativeconfigclient 模块。
+
+之后，从配置中心读取的配置文件数据就可以像仿佛这个文件是在本项目中一样了。

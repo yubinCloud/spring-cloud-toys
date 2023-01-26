@@ -17,6 +17,8 @@
         <module>ribbon</module>
         <module>feignexample</module>
         <module>hystrix</module>
+        <module>nativeconfigserver</module>
+        <module>nativeconfigclient</module>
     </modules>
 
     <properties>

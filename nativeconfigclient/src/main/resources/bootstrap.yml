@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: configclient
+  profiles:
+    active: dev  # 如此配置后，程序将 application.name 和 profiles.active 进行拼接来得到目标配置文件名，然后去 config server 中去寻找
+  cloud:
+    config:
+      uri: http://localhost:8762  # 指定配置中心的 URI
+      fail-fast: true  # 设置客户端优先判断 config server 获取是否正常

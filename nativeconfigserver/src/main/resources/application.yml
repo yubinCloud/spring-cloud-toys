@@ -1,0 +1,12 @@
+server:
+  port: 8762
+spring:
+  application:
+    name: native-config-server
+  profiles:
+    active: native  # 配置文件的获取方式，native 表示我们要读取本地配置
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/shared
