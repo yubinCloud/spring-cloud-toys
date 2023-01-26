@@ -8,6 +8,7 @@
 + RestTemplate：对服务进行调用
 + Zuul: Gateway
 + Ribbon: 负载均衡解决方案，是一个使用 HTTP 请求进行控制的负载均衡客户端
++ Feign: 声明式接口调用，可以以简单的方式来调用 HTTP API，可以替代 Ribbon + RestTemplate
 
 ## Modules 介绍
 
@@ -119,3 +120,47 @@ restTemplate.getForObject("http://provider/port/index", String.class);
 
 如上的代码其实就是调用了 provider 服务的 `/port/index` 接口，并通过负载均衡算法，均匀地请求多个 provider 实例。
 
+### Feign
+
+Feign 是⼀一个声明式、模版化的 Web Service 客户端，开发者可以通过简单的接⼝口和注解来调⽤用 HTTP API。
+Spring Cloud Feign 整合了 Ribbon 和 Hystrix，具有可插拔、基于注解、负载均衡、服务熔断等一系列列便便捷功能。
+
+特点：
+
++ Feign 是⼀一个声明式的 Web Service 客户端
++ 支持 Feign 注解、Spring MVC 注解、JAX-RS 注解
++ 基于 Ribbon 实现，使用起来更加简单
++ 集成了 Hystrix，具备服务熔断的功能
+
+#### 使用 Feign 进行远程调用
+
+在 pom 中加入下面这个 dependency：
+
+```xml
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-openfeign</artifactId>
+</dependency>
+```
+
+在 SpringApplication 类上加上注解 `@EnableFeignClients` 就可以使用 Feign 了。
+
+使用方法：
+
+1. 创建一个 interface，并通过注解 `@FeignClient` 指明所要调用的服务
+2. 在 interface 中定义具体的调用接口，形式上与一个 controller 的写法相似
+3. 在其他地方可以直接注入这个 feign client，并使用它来发起调用
+
+#### Feign 开启熔断器
+
+application.yml 中添加：
+
+```yml
+feign:
+  hystrix:
+    enabled: true  # 开启熔断机制
+```
+
+然后对那个定义了各个远程调用接口的 interface 写一个实现类，比如 feignexample 中的 `ProviderServiceError` 类，
+它定义了各个接口在远程调用错误时的处理逻辑。完成这个实现类之后，在 interface 的 FeignClient 注解中加一个 `fallback` 的参数，并把错误处理的实现类传给该参数。
+这样，当 Feign 远程调用接口失败后，就会再去调用错误处理类的相应方法。

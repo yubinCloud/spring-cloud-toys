@@ -15,6 +15,7 @@
         <module>consumer</module>
         <module>zuul</module>
         <module>ribbon</module>
+        <module>feignexample</module>
     </modules>
 
     <properties>
