@@ -1,6 +1,6 @@
 # Spring Cloud Toys
 
-一个 Spring Cloud 的 Toys，主要作为学习使用。
+一个 Spring Cloud 的 Toys，主要作为学习使用。 项目不依赖其他数据库，只需要 Maven 环境即可启动成功。
 
 本项目主要使用到的微服务组件有：
 
@@ -15,13 +15,22 @@
 
 ## Modules 介绍
 
-| 模块名 | 描述 |
-| :---: | :--- |
-| eurekaserver | Eureka Server 服务，对外提供了注册中心的功能 |
-| eurekaclient | 一个 Eureka Client，是一个服务提供方，对外提供了 Student 实体的增删查改功能 |
-| resttemplate | 它使用 RestTemplate 来调用 eurekaclient 所提供的服务 |
-| consumer | 服务消费者，内部调用了 `eurekaclient` 所提供的服务 |
-| zuul | 使用 Zuul 的 Gateway，可以作为 proxy 并统一访问入口 |
+|        模块名         | 描述                                                                                      |
+|:------------------:|:----------------------------------------------------------------------------------------|
+|    eurekaserver    | Eureka Server 服务，对外提供了注册中心的功能                                                           |
+|    eurekaclient    | 一个 Eureka Client，是一个服务提供方，对外提供了 Student 实体的增删查改功能                                       |
+|    resttemplate    | 它使用 RestTemplate 来调用 eurekaclient 所提供的服务                                                |
+|      consumer      | 服务消费者，内部调用了 `eurekaclient` 所提供的服务                                                       |
+|        zuul        | 使用 Zuul 的 Gateway，可以作为 proxy 并统一访问入口                                                    |
+|       ribbon       | 实现了负载均衡算法，在使用 RestTemplate 请求时只需指定注册于 Eureka 的服务名，然后 Ribbon 会基于负载均衡算法来选择具体请求的实例         |
+|    feignexample    | 取代了 RestTemplate 和 Ribbon，以更简洁的形式提供了对 HTTP API 的访问，并内置负载均衡、服务熔断等功能，这里对 provider 服务进行了访问 |
+|      hystrix       | 结合 Spring Boot Actuator 实现了对服务的健康监测、数据统计等功能                                             |
+| nativeconfigserver | 使用 Spring Cloud Config 提供了配置中心的服务，配置中心的数据存放于本地的 resource 目录下                            |
+| nativeconfigclient | 通过访问 nativeconfigserver 来获得 application 启动的配置文件                                         |
+| remoteconfigserver | 使用 Spring Cloud Config 提供了配置中心的服务，配置中心的数据存放于远程 Git 仓库中，其实也就是本项目的根目录的 /config 目录下        |
+| remoteconfigclient | 通过访问 remoteconfigserver 来获得 application 启动的配置文件                                         |
+|    zipkinserver    | Zipkin Server 端，可以以 UI 的形式来跟踪服务的运行 |
+| zipkinclient | Zipkin Client 端，对该 client 的请求就可以被 zipkinserver 所捕捉，并被以可视化 UI 的形式呈现出来 |
 
 ## 模块完成顺序
 
