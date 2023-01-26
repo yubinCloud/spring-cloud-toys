@@ -36,6 +36,7 @@
 8. nativeconfigserver
 9. nativeconfigclient
 10. remoteconfigserver
+11. remoteconfigclient
 
 ## 组件介绍
 

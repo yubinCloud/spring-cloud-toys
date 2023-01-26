@@ -10,8 +10,8 @@ spring:
           uri: https://gitee.com/yubinCloud/spring-cloud-toys.git  # 指定存储配置数据的 git 仓库
           search-paths: config
           username: yubinCloud
-          password: xxxx
-      label: master
+          password: xxxx  # 这里需要修改成自己的账号和密码
+      label: main
 eureka:
   client:
     serviceUrl:
