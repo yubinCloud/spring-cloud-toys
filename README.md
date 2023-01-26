@@ -9,6 +9,7 @@
 + Zuul: Gateway
 + Ribbon: 负载均衡解决方案，是一个使用 HTTP 请求进行控制的负载均衡客户端
 + Feign: 声明式接口调用，可以以简单的方式来调用 HTTP API，可以替代 Ribbon + RestTemplate
++ Hystrix: 容错机制
 
 ## Modules 介绍
 
@@ -164,3 +165,28 @@ feign:
 然后对那个定义了各个远程调用接口的 interface 写一个实现类，比如 feignexample 中的 `ProviderServiceError` 类，
 它定义了各个接口在远程调用错误时的处理逻辑。完成这个实现类之后，在 interface 的 FeignClient 注解中加一个 `fallback` 的参数，并把错误处理的实现类传给该参数。
 这样，当 Feign 远程调用接口失败后，就会再去调用错误处理类的相应方法。
+
+### Hystrix
+
+在不改变各个微服务调用关系的前提下，针对错误情况进行预先处理。
+
+正如前面 Feign 中开启 Hystrix 的熔断器所示，它可以有效防止在调用一个服务时出现等待时间过长导致系统崩溃的现象，并可以在因一个服务出现问题时对调用者返回一个友好的提示信息。
+
+设计原则：
+
++ 服务隔离机制
++ 服务降级机制
++ 熔断机制
++ 提供实时的监控和报警功能
++ 提供实时的配置修改功能
+
+Hystrix 数据监控需要结合 Spring Boot Actuator 来使用，Actuator 提供了对服务的健康监测、数据统
+计，可以通过 hystrix.stream 节点获取监控的请求数据，提供了可视化的监控界面。
+
+这一部分要在 pom 中加的 dependency 还是挺多的，具体可以参考 hystrix 模块下的 pom.xml。
+之后还需要再 Spring Boot Application 上加上几个注解，具体参考 hystrix 模块下的 HystrixApplication 类。
+
+服务启动后，
+
++ 访问 `/actuator/hystrix.stream` 可以监控到请求数据
++ 访问 `/hystrix` 可以看到可视化的监控界面，输入要监控的地址节点，即可看到该节点的可视化数据监控

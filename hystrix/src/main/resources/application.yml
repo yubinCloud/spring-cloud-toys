@@ -1,0 +1,19 @@
+server:
+  port: 8060
+spring:
+  application:
+    name: hystrix
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+feign:
+  hystrix:
+    enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'hystrix.stream'  # 当我们需要监控时，直接访问这个节点就可以了，他会把所有的请求数据都给展示出来

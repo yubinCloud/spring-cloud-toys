@@ -16,6 +16,7 @@
         <module>zuul</module>
         <module>ribbon</module>
         <module>feignexample</module>
+        <module>hystrix</module>
     </modules>
 
     <properties>
