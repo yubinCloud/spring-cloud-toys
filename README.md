@@ -11,6 +11,7 @@
 + Feign: 声明式接口调用，可以以简单的方式来调用 HTTP API，可以替代 Ribbon + RestTemplate
 + Hystrix: 容错机制
 + Spring Cloud Config: 配置中心
++ Spring Cloud Zipkin: 服务跟踪，一个可以采集并且跟踪分布式系统中请求数据的组件
 
 ## Modules 介绍
 
@@ -37,6 +38,8 @@
 9. nativeconfigclient
 10. remoteconfigserver
 11. remoteconfigclient
+12. zipkinserver
+13. zipkinclient
 
 ## 组件介绍
 
@@ -245,3 +248,20 @@ nativeconfigclient 可以读取 server 服务所提供的配置数据。它的 p
 然后创建一个 config server 模块：`remoteconfigserver`，其余过程与 nativeconfigserver 类似，
 只不过需要在 application.yml 中配置一下远程 git 仓库的相关信息。
 
+### Zipkin
+
+Zipkin 是一个可以采集并且跟踪分布式系统中请求数据的组件，让开发者可以更加直观地监控到请求在各个微服务所耗费的时间等。
+
+Zipkin 主要分成两部分：Zipkin Server 和 Zipkin Client。下面分别介绍：
+
+#### Zipkin Server 端
+
+对应模块 zipkinserver，引入相应 pom 依赖后并做简单配置即可使用。
+
+启动成功后，访问 `/zipkin/` 可以看到 UI 监控界面。
+
+#### Zipkin Client 端
+
+对应模块 zipkinclient，引入相应 pom 依赖后并做简单配置即可使用。
+
+启动成功后，对该服务进行请求，之后就可以在 Zipkin Server 的 UI 界面中点击“Find Traces”即可看到服务跟踪情况。
