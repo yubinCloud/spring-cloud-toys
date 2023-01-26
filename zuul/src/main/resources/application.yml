@@ -1,0 +1,17 @@
+server:
+  port: 8030
+
+spring:
+  application:
+    name: zuul-gateway
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+zuul:
+  routes:
+    provider: /p/**  # 表示这个格式的请求都会转发给 provider 服务，这样就不用记 provider 的端口等信息了
+
